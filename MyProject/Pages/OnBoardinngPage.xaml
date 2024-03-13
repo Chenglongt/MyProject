@@ -2,26 +2,29 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyProject.Pages.OnBoardinngPage"
-             Title="OnBoardinngPage">
-    <VerticalStackLayout Spacing="25">
-        <Label 
-            Text="Welcome to my project!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        
-        <Button Text="Go to App"
-           Clicked="Button_Clicked"
-           VerticalOptions="Center"
-           HorizontalOptions="Center"/>
+             Shell.NavBarIsVisible="False">
 
-        <Button Text="Signin"
-           Clicked="Signin_Clicked"
-           VerticalOptions="Center"
-           HorizontalOptions="Center"/>
-
-        <Button Text="Signout"
-                Clicked="Signup_Clicked"
-                VerticalOptions="Center"
-                HorizontalOptions="Center"/>
-    </VerticalStackLayout>
+    <Grid RowDefinitions=" *, Auto" Padding="0,10,0,50">
+        <VerticalStackLayout Grid.Row="0"
+                             Spacing="5" >
+            <Image Source="logoi"
+                   HeightRequest="350"
+                   WidthRequest="350"/>
+            <Label Text="Welcome"
+                   HorizontalOptions="Center"
+                   FontSize="15"
+                   FontAttributes="Bold"/>
+            <Label Text="Long Noodle "
+                   HorizontalOptions="Center"
+                   FontSize="20"
+                   FontAttributes="Bold"/>
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="1"
+                             Spacing="15"
+                             HorizontalOptions="Center">
+            <Button Text="Signin" Clicked="Signin_Clicked"/>
+            <Button Text="Singup" Clicked="Signup_Clicked"/>
+        </VerticalStackLayout>
+    </Grid>
+    
 </ContentPage>

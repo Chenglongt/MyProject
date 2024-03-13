@@ -33,5 +33,10 @@ namespace MyProject
         {
             await Launcher.OpenAsync("https://www.youtu.com");
         }
+
+        private async void SignoutMenuItem_Clicked(object sender, EventArgs e)
+        {
+            await Shell.Current.DisplayAlert("Alert", "Signout menu item clicked", "Ok");
+        }
     }
 }

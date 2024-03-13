@@ -4,10 +4,16 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MyProject"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:pages="clr-namespace:MyProject.Pages"
     Shell.FlyoutBehavior="Flyout"
     Title="MyProject">
-    
+
+
+    <Shell.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="Gold"
+                                   StatusBarStyle="Default"/>
+    </Shell.Behaviors>
     <!--<ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
@@ -37,6 +43,10 @@
 
     </TabBar>
 
+    <MenuItem Text="Loutout"
+              IconImageSource="logout" 
+              Clicked="SignoutMenuItem_Clicked"/>
+
     <Shell.ItemTemplate>
         <DataTemplate>
             <VerticalStackLayout>
@@ -49,24 +59,60 @@
                           Grid.Column="0"
                           HeightRequest="24"
                           Source="{Binding FlyoutIcon}"
-                          WidthRequest="24"/>
+                          WidthRequest="24">
+                        <Image.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="Gold"/>
+                        </Image.Behaviors>
+                    </Image>
                     <Image
                         Grid.Column="2"
                         Source="right_arrow"
-                        WidthRequest="24"/>
+                        WidthRequest="24">
+                        <Image.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="Gold"/>
+                        </Image.Behaviors>
+                    </Image>
                     <Label 
                         Grid.Column="1"
                         FontSize="16"
                         FontAttributes="Bold"
                         Text="{Binding Title}"
-                        TextColor="DeepSkyBlue"/>
+                        TextColor="Gold"/>
                     <BoxView Grid.Row ="1"
                              Grid.ColumnSpan="3"
-                             HeightRequest="1"/>
+                             HeightRequest="1"
+                             Color="Gold"/>
                 </Grid>
             </VerticalStackLayout>
         </DataTemplate>
     </Shell.ItemTemplate>
+
+    <Shell.MenuItemTemplate>
+        <DataTemplate>
+            <Grid 
+                ColumnDefinitions="Auto,*"
+                Padding="10"
+                ColumnSpacing="15"
+                RowSpacing="5"
+                RowDefinitions="Auto,Auto">
+                <Image
+           Grid.Column="0"
+           HeightRequest="24"
+           Source="{Binding Icon}"
+           WidthRequest="24">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="Gold"/>
+                    </Image.Behaviors>
+                </Image>
+                <Label 
+         Grid.Column="1"
+         FontSize="16"
+         FontAttributes="Bold"
+         Text="{Binding Text}"
+         TextColor="Gold"/>
+            </Grid>
+        </DataTemplate>
+    </Shell.MenuItemTemplate>
 
     <Shell.FlyoutHeader>
         <Border BackgroundColor="Gold"
@@ -101,4 +147,7 @@
             
         </Border>
     </Shell.FlyoutFooter>
+
+    
+
 </Shell>
