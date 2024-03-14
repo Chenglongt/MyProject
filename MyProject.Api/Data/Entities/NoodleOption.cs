@@ -7,8 +7,9 @@ namespace MyProject.Api.Data.Entities
         
         public int NoodleId { get; set; }
 
-        [Required,MaxLength(40)]
+        [Required, MaxLength(40)]
         public string Flavor { get; set; }
+
         [Required, MaxLength(40)]
         public string Topping { get; set; }
         public virtual Noodle Noodle { get; set; }
