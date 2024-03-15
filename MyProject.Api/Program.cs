@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MyProject.Api.Data;
+using MyProject.Api.EndPoints;
 using MyProject.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,8 +14,19 @@ builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("Noodle");
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
- 
-builder.Services.AddTransient<TokenService>();
+
+// Authentication***********************************************************************
+builder.Services.AddAuthentication(options =>
+{
+         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(jwpOptions =>
+    jwpOptions.TokenValidationParameters = TokenService.GetTokenValidationParameters(builder.Configuration)); 
+
+builder.Services.AddAuthorization();
+builder.Services.AddTransient<TokenService>().AddTransient<PasswordService>().AddTransient<AuthenticationService>();
+
+            
 
 var app = builder.Build();
 
@@ -29,27 +42,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
-
+app.MapEndpoints();
 
 
 app.Run();
@@ -60,11 +56,6 @@ static void MigrateDatabase(IServiceProvider sp)
     var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
     if(dataContext.Database.GetPendingMigrations().Any())
      dataContext.Database.Migrate(); 
-}
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
 
 
