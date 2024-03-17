@@ -15,6 +15,16 @@
                 <Setter Property="CornerRadius" Value="15"/>
                 <Setter Property="WidthRequest" Value="200"/>
             </Style>
+                 <Style TargetType="Entry">
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="PlaceholderColor" Value="Grey"/>
+                 </Style>
+            <Style TargetType="Editor">
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="PlaceholderColor" Value="Grey"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

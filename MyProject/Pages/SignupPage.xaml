@@ -1,13 +1,57 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MyProject.ViewModels"
              x:Class="MyProject.Pages.SignupPage"
+             x:DataType="vm:AuthenticationVM"
              Title="Signup"
              Shell.FlyoutBehavior="Disabled">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <Grid>
+        <VerticalStackLayout VerticalOptions="Center"
+                             Padding="50"
+                             Spacing="18">
+            <Image Source="logo"
+                 
+                   Aspect="AspectFill"/>
+
+            <Entry Text="{Binding UserName}"
+                   
+                   Placeholder="UserName"/>
+            
+            <Entry Text="{Binding Email}"
+                 Placeholder="Email"/>
+            
+            <Entry Text="{Binding Password}"
+                 Placeholder="Password"
+                   IsPassword="True"/>
+
+            <Editor Text="{Binding Address}"
+                 Placeholder="Address"
+                    MaxLength="100"
+                    AutoSize="TextChanges"/>
+
+            <Label Text="Is Exsisting user? Signin">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Signin_Tapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+            
+            <Button Text="Signup"
+                    IsEnabled="{Binding CanSignup}"
+                    TextColor="White"
+                    Command="{Binding SignupCommand}"/>
+            
+            
+
+        </VerticalStackLayout>
+        <ActivityIndicator Color="Black"
+                           IsRunning="{Binding IsBusy}"/>
+    </Grid>
 </ContentPage>
